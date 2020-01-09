@@ -37,8 +37,7 @@
     function paramsValidate($params_needed) {
          foreach ($params_needed as $param) {
             if (!isset($_GET[$param])) {
-               die("Hianyzik a(z) " . $param . " parameter a keresbol.");
-               return false;
+               return false;    //ha hianyzik egy szukseges parameter
             }
          }
          return true;
