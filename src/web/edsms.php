@@ -29,11 +29,21 @@
     
     
     $allowedAddresses = array('127.0.0.1', '193.28.86.95', '195.228.45.25'); // Az alapból megadott telefonszámok a netfizetéstől érkező IP címek (Ezért azért kell hogy random ipkről ne lehessen ppt addolni.)
+    $neededParameters = array("tel", "value", "prefix", "text");
 
     if (!in_array($_SERVER['REMOTE_ADDR'], $allowedAddresses))
         die('Nem szabad.. ' . $_SERVER['REMOTE_ADDR']);
 
-    if (isset($_GET['tel']) && isset($_GET['value']) && isset($_GET['prefix']) && isset($_GET['text'])) { // Ha minden get request megvan
+    function paramsValidate($params_needed) {
+         foreach ($params_needed as $param) {
+            if (!isset($_GET[$param])) {
+               die("Hianyzik a(z) " . $param . " parameter a keresbol.");
+               return false;
+            }
+         }
+         return true;
+    }
+    if (paramsValidate($neededParameters)) { // Ha minden get request megvan
         $phone = $_GET['tel'];
         $value = $_GET['value'];
         $prefix = $_GET['prefix'];
